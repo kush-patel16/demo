@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bus Timing Website</title>
+		<link rel="stylesheet" href="bus.css">
+</head>
+<body>
+    <h1>Welcome to Bus Timing Website</h1>
+
+    <form id="busForm">
+        <label for="from">From:</label>
+        <select id="from" name="from">
+		    <option value="location0">--select--</option>
+            <option value="location1">Rajkot</option>
+            <option value="location2">Doraji</option>
+            <option value="location3">Gondal</option>
+            <!-- Add more locations as needed -->
+        </select>
+
+        <label for="to">To:</label>
+        <select id="to" name="to">
+			<option value="location0">--select--</option>
+            <option value="location1">Surat</option>
+            <option value="location2">Vadodara</option>
+            <option value="location3">Junagadh</option>
+            <!-- Add more locations as needed -->
+        </select>
+
+        <button type="button" onclick="getTimings()">Get Timings</button>
+    </form>
+
+    <div id="timingResults">
+        <!-- Bus timing results will be displayed here using JavaScript -->
+    </div>
+
+    <script>
+        // Define locations and corresponding bus timings
+        const locations = {
+            location1: {
+                name: "Location 1",
+                routes: {
+					 location1: [
+                        { time: '07:30 AM', bus: 'Bus 16' },
+                        { time: '09:00 AM', bus: 'Bus 14' },
+                    ],
+                    location2: [
+                        { time: '08:00 AM', bus: 'Bus 1' },
+                        { time: '09:30 AM', bus: 'Bus 3' },
+                    ],
+                    location3: [
+                        { time: '10:00 AM', bus: 'Bus 7' },
+                        { time: '11:30 AM', bus: 'Bus 9' },
+                    ],
+                    // Add more routes as needed
+                }
+            },
+            location2: {
+                name: "Location 2",
+                routes: {
+                    location1: [
+                        { time: '07:30 AM', bus: 'Bus 16' },
+                        { time: '09:00 AM', bus: 'Bus 14' },
+                    ],
+					
+					location2: [
+                        { time: '08:00 AM', bus: 'Bus 1' },
+                        { time: '09:30 AM', bus: 'Bus 3' },
+                    ],
+					
+					 location3: [
+                        { time: '10:00 AM', bus: 'Bus 7' },
+                        { time: '11:30 AM', bus: 'Bus 9' },
+                    ],
+					
+                    // Add more routes as needed
+                }
+            },
+            location3: {
+                name: "Location 3",
+                routes: {
+                    location1: [
+                        { time: '08:30 AM', bus: 'Bus 5' },
+                        { time: '10:15 AM', bus: 'Bus 2' },
+                    ],
+					
+					 location2: [
+                        { time: '08:00 AM', bus: 'Bus 1' },
+                        { time: '09:30 AM', bus: 'Bus 3' },
+                    ],
+					
+					location3: [
+                        { time: '10:00 AM', bus: 'Bus 7' },
+                        { time: '11:30 AM', bus: 'Bus 9' },
+                    ],
+                    // Add more routes as needed
+                }
+            },
+            // Add more locations as needed
+        };
+
+        function getTimings() {
+            const fromLocation = document.getElementById('from').value;
+            const toLocation = document.getElementById('to').value;
+
+            // Retrieve timings based on selected locations
+            const timings = getTimingsForRoute(fromLocation, toLocation);
+
+            let timingHTML = `<h2>Bus Timings from ${locations[fromLocation].name} to ${locations[toLocation].name}</h2>`;
+            timingHTML += '<ul>';
+            for (const timing of timings) {
+                timingHTML += `<li>${timing.time} - ${timing.bus}</li>`;
+            }
+            timingHTML += '</ul>';
+
+            const timingResults = document.getElementById('timingResults');
+            timingResults.innerHTML = timingHTML;
+        }
+
+        function getTimingsForRoute(fromLocation, toLocation) {
+            const route = locations[fromLocation].routes[toLocation];
+            return route || [];
+        }
+    </script>
+</body>
+</html>
